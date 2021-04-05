@@ -137,6 +137,7 @@ std::string Sprite2D::GetText()
 
 void Sprite2D::Set2DPosition(GLfloat width, GLfloat height)
 {
+	
 	m_Vec2DPos.x = width;
 	m_Vec2DPos.y = height;
 

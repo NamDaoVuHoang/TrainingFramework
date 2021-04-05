@@ -10,6 +10,8 @@
 #include "GameObject/Sprite2D.h"
 #include "GameObject/Sprite3D.h"
 #include "GameObject/Text.h"
+#include "soloud.h"
+#include "soloud_wav.h"
 
 class ResourceManagers : public CSingleton<ResourceManagers>
 {
@@ -20,6 +22,9 @@ public:
 	void AddModel(const std::string& name);
 	void AddTexture(const std::string& name);
 	void AddFont(const std::string& name);
+	void AddSound(const std::string& name);
+	void PlaySound(const std::string& name, bool loop = false);
+	void PauseSound(const std::string& name);
 
 	void RemoveShader(const std::string& name);
 	void RemoveModel(const std::string& name);
@@ -30,12 +35,17 @@ public:
 	std::shared_ptr<Texture> GetTexture(const std::string& name);
 	std::shared_ptr<Models> GetModel(const std::string& name);
 	std::shared_ptr<Font> GetFont(const std::string& name);
+	SoLoud::Soloud m_Soloud;
+
 private:
 	std::map<std::string, std::shared_ptr<Shaders>> m_MapShader;
 	std::map<std::string, std::shared_ptr<Texture>> m_MapTexture;
 	std::map<std::string, std::shared_ptr<Models>> m_MapModels;
 	std::map<std::string, std::shared_ptr<Font>> m_MapFont;
+	std::map<std::string, std::shared_ptr<SoLoud::Wav>> m_MapWave;
+	
 
+	std::string m_SoundsPath;
 	std::string m_ShaderPath;
 	std::string m_TexturePath;
 	std::string m_ModelsPath;

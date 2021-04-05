@@ -18,10 +18,12 @@ public:
 	GLfloat getCHitbox_x();
 	GLfloat getCHitbox_y();
 
+	void Update(GLfloat hitbox_x, GLfloat hitbox_y, GLfloat c_hitbox_x, GLfloat c_hitbox_y);
+
 private:
-	GLfloat hitbox_x = 0;
-	GLfloat hitbox_y = 0;
-	GLfloat c_hitbox_x = 0;
-	GLfloat c_hitbox_y = 0;
+	GLfloat hitbox_x = 0.0f;
+	GLfloat hitbox_y = 0.0f;
+	GLfloat c_hitbox_x = 0.0f;
+	GLfloat c_hitbox_y = 0.0f;
 };
 

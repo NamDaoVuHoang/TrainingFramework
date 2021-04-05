@@ -7,7 +7,7 @@
 #include "GameObject/Sprite2D.h"
 #include "GameObject/Sprite3D.h"
 #include "GameObject/Text.h"
-
+//using namespace std;
 
 ResourceManagers::ResourceManagers()
 {
@@ -16,6 +16,8 @@ ResourceManagers::ResourceManagers()
 	m_TexturePath = dataPath + "Textures\\";
 	m_ModelsPath = dataPath + "Model\\";
 	m_FontPath = dataPath + "fonts\\";
+	m_SoundsPath = dataPath + "Sounds\\";
+	//m_Soloud.init();
 }
 
 ResourceManagers::~ResourceManagers()
@@ -41,6 +43,44 @@ void ResourceManagers::AddShader(const std::string& name)
 
 }
 
+void ResourceManagers::AddSound(const std::string& name) {
+	auto it = m_MapWave.find(name);
+	if (it != m_MapWave.end()) {
+		return;
+	}
+	std::shared_ptr<SoLoud::Wav> wave;
+	std::string wav = m_SoundsPath + name + ".wav";
+	wave = std::make_shared<SoLoud::Wav>();
+	wave->load(wav.c_str());
+	m_MapWave.insert(std::pair < std::string, std::shared_ptr < SoLoud::Wav >>(name, wave));
+}
+
+
+void ResourceManagers::PlaySound(const std::string& name, bool loop) {
+	std::shared_ptr<SoLoud::Wav> wave;
+	auto it = m_MapWave.find(name);
+	if (it != m_MapWave.end()) {
+		wave = it->second;
+	}
+	else {
+		std::string wav = m_SoundsPath + name + ".wav";
+		wave = std::make_shared < SoLoud::Wav>();
+		wave->load(wav.c_str());
+		std::cout << wav;
+		m_MapWave.insert(std::pair<std::string, std::shared_ptr<SoLoud::Wav>>(name, wave));
+	}
+	
+	m_Soloud.play(*wave);
+}
+
+void ResourceManagers::PauseSound(const std::string& name) {
+	std::shared_ptr<SoLoud::Wav> wave;
+	auto it = m_MapWave.find(name);
+	if (it != m_MapWave.end()) {
+		wave = it->second;
+	}
+	m_Soloud.stopAudioSource(*wave);
+}
 void ResourceManagers::AddModel(const std::string& name)
 {
 	auto it = m_MapModels.find(name);

@@ -2,6 +2,7 @@
 #include "GameManager/ResourceManagers.h"
 using namespace std;
 
+class Text;
 class Hitbox;
 class Sprite2D;
 class Sprite3D;
@@ -17,7 +18,14 @@ public:
 	void Update();
 	void Draw(GLfloat deltatime);
 	void HandleKeyEvents(int key, bool bIsPressed);
-
+	bool GetIs_Attacking();
+	int GetCurrentAttackFrame(); 
+	Hitbox GetHitbox();
+	AnimationSprite GetAttackAnimation();
+	GLfloat GetCurrentX();
+	GLfloat GetCurrentY();
+	void SetCurrentX(GLfloat c_current_width);
+	bool Is_Alive();
 protected:
 	
 	//bool is_Standing = false;
@@ -32,6 +40,11 @@ protected:
 	bool is_TakingDamage = false;
 	bool is_Dodging = false;
 
+
+	int max_health = 0;
+	int health = 0;
+	GLfloat not_taking_damage_time = 0.0f;
+	GLfloat taking_damage_time = 0.3f;
 	GLfloat slide_wait_time = 0.5f;
 	GLfloat slide_time = 0;
 	GLfloat c_current_width = 20;
@@ -41,7 +54,8 @@ protected:
 	GLfloat jump_speed = 190;
 	GLfloat rise_time = 0;
 	GLfloat fall_time = 0;
-
+	
+	std::shared_ptr<Text> name;
 	std::shared_ptr<Hitbox> hitbox;
 	//std::shared_ptr<Text>  m_score;
 	//std::shared_ptr<AnimationSprite> m_character;

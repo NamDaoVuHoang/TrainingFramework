@@ -19,7 +19,7 @@ GSIntro::~GSIntro()
 void GSIntro::Init()
 {
 	auto model = ResourceManagers::GetInstance()->GetModel("Sprite2D");
-	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader");
+	auto shader = ResourceManagers::GetInstance()->GetShader("TextureShader1");
 	auto texture = ResourceManagers::GetInstance()->GetTexture("logo");
 
 	m_logo = std::make_shared<Sprite2D>(model, shader, texture);

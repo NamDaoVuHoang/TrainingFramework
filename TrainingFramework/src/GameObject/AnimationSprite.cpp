@@ -11,6 +11,9 @@ extern GLint screenHeight;
 AnimationSprite::AnimationSprite() {
 }
 
+AnimationSprite::~AnimationSprite() {
+}
+
 AnimationSprite::AnimationSprite(std::shared_ptr<Models> model, std::shared_ptr<Shaders> shader, std::shared_ptr<Texture> texture,
 	int numFrames, float frameTimes) : m_numFrames(numFrames), m_currentTimes(0.0f), m_frameTimes(frameTimes), m_currentFrames(0) 
 {
@@ -30,7 +33,7 @@ AnimationSprite::AnimationSprite(std::shared_ptr<Models> model, std::shared_ptr<
 {
 
 	for (int i = 0; i < m_numFrames; i++) {
-		//hitbox[i] = std::make_shared<Hitbox>(0.0f, 0.0f, 0.0f, 0.0f);
+		hitbox[i] = std::make_shared<Hitbox>(0.0f, 0.0f, 0.0f, 0.0f);
 	}
 	m_pModel = model;
 	m_pShader = shader;
@@ -223,6 +226,26 @@ void AnimationSprite::UpdateTaunting(GLfloat deltatime, bool* is_Taunting) {
 	else m_currentFrames = 0;
 }
 
+void AnimationSprite::UpdateHealth(GLfloat deltatime) {
+	if (m_currentFrames >= m_maxFrames - 1) return;
+	m_currentTimes += deltatime;
+	if (m_currentTimes >= m_frameTimes) {
+		m_currentFrames++;
+		//printf("%d",m_currentFrames);
+		m_currentTimes = m_currentTimes - m_frameTimes;
+	}
+}
+
+void AnimationSprite::UpdateDying(GLfloat deltatime) {
+	if (m_currentFrames >= m_maxFrames - 1) return;
+	m_currentTimes += deltatime;
+	if (m_currentTimes >= m_frameTimes) {
+		m_currentFrames++;
+		//printf("%d",m_currentFrames);
+		m_currentTimes = m_currentTimes - m_frameTimes;
+	}
+}
+
 void AnimationSprite::SetCurrentFrames(int frame) {
 	m_currentFrames = frame;
 }
@@ -231,7 +254,7 @@ int AnimationSprite::GetCurrentFrame() {
 	return m_currentFrames;
 }
 
-/*void AnimationSprite::SetHitboxX(GLfloat hitbox_x, int i) {
+void AnimationSprite::SetHitboxX(GLfloat hitbox_x, int i) {
 	hitbox[i]->setHitbox_x(hitbox_x);
 };
 
@@ -245,4 +268,21 @@ void AnimationSprite::SetCHitboxX(GLfloat c_hitbox_x, int i) {
 
 void AnimationSprite::SetCHitboxY(GLfloat c_hitbox_y, int i) {
 	hitbox[i]->setCHitbox_y(c_hitbox_y);
-};*/
+};
+
+GLfloat AnimationSprite::getHitbox_x(int i) {
+	return hitbox[i]->getHitbox_x();
+};
+GLfloat AnimationSprite::getHitbox_y(int i) {
+	return hitbox[i]->getHitbox_y();
+};
+GLfloat AnimationSprite::getCHitbox_x(int i) {
+	return hitbox[i]->getCHitbox_x();
+};
+GLfloat AnimationSprite::getCHitbox_y(int i) {
+	return hitbox[i]->getCHitbox_y();
+};
+
+void AnimationSprite::SetDamage(float damage) {
+	this->damage = damage;
+}

@@ -46,8 +46,8 @@ void GameStateMachine::PushState(StateTypes stt)
 
 	// store and init the new state
 	// 
-	m_StatesStack.push_back(state);
-	m_StatesStack.back()->Init();
+	/*m_StatesStack.push_back(state);
+	m_StatesStack.back()->Init();*/
 	m_pNextState = state;
 }
 
